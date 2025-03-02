@@ -3,7 +3,7 @@ using System.Threading;
 
 class BreathingActivity : Activity
 {
-    public BreathingActivity() : base("Breathing Activity", "This activity will help you relax by guiding you through deep breathing.") { }
+    public BreathingActivity() : base("Breathing Activity", "The purpose of this activity is to help you relax by guiding you through deep breathing exercise.") { }
 
     public override void Start()
     {

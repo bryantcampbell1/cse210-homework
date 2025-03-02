@@ -36,4 +36,10 @@ class Program
 
         Console.WriteLine("Thank you for using the mindfulness app!");
     }
+
+        static void Main()
+    {
+        Program program = new Program();  
+        program.DisplayMenu();            
+    }
 }

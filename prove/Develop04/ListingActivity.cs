@@ -19,7 +19,7 @@ class ListingActivity : Activity
         Random rand = new();
         Console.WriteLine(Prompts[rand.Next(Prompts.Count)]);
 
-        Console.WriteLine("Get ready to list items...");
+        Console.WriteLine("Get ready to list items  ");
         Countdown(3);
 
         List<string> items = new();

@@ -18,7 +18,7 @@ class ReflectingActivity : Activity
         "How did you get started?"
     };
 
-    public ReflectingActivity() : base("Reflection Activity", "This activity helps you reflect on times when you showed strength and resilience.") {}
+    public ReflectingActivity() : base("Reflection Activity", "The purpose of this activity is to reflect on times when you showed strength and resilience.") {}
 
     public override void Start()
     {
