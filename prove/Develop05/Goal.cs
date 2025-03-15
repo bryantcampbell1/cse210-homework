@@ -5,7 +5,7 @@ abstract class Goal
     public string Name { get; protected set; }
     public string Description { get; protected set; }
     public int BasePoints { get; protected set; }
-    public bool IsCompleted { get; set; }  // Make IsCompleted public
+    public bool IsCompleted { get; set; }  
 
     protected Goal(string name, string description, int basePoints)
     {

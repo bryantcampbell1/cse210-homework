@@ -1,4 +1,0 @@
-0
-EternalGoal|scripture study|10 minutes|50|False
-ChecklistGoal|attend temple|oerform ordiancnce|50|False
-SimpleGoal|give talk|speakl in sacrament|100|False

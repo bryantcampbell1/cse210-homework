@@ -1,8 +1,8 @@
 using System;
 class ChecklistGoal : Goal
 {
-    private int TargetCount;
-    private int CurrentCount; // Track the number of times the goal has been completed
+    public int TargetCount;
+    public int CurrentCount; // Track the number of times the goal has been completed
     private int BonusPoints;
 
     public ChecklistGoal(string name, string description, int basePoints, int targetCount, int bonusPoints)
@@ -23,19 +23,20 @@ class ChecklistGoal : Goal
         IsCompleted = isCompleted;
     }
 
-    public override int RecordEvent()
+    public ChecklistGoal(string name, string description, int basePoints, int targetCount, int bonusPoints, bool isCompleted) : this(name, description, basePoints, targetCount, bonusPoints)
     {
-        // Increase the count each time the goal is completed
+    }
+
+    public override int RecordEvent()
+    { 
         CurrentCount++;
 
-        // Check if the target count has been reached and mark goal as completed
         if (CurrentCount >= TargetCount)
         {
             IsCompleted = true;
-            return BasePoints + BonusPoints; // Return the base points + bonus
+            return BasePoints + BonusPoints; 
         }
 
-        // If target isn't reached, return the base points
         return BasePoints;
     }
 
@@ -43,13 +44,12 @@ class ChecklistGoal : Goal
 
     public override string GetStatus() 
     {
-        // Display progress like "2/5" for 2 out of 5
         return $"[{CurrentCount}/{TargetCount}] {Name} - {Description}";
     }
 
-    // Method to save the current count when saving the goals
+
     public int GetCurrentCount() => CurrentCount;
 
-    // Method to set the current count (used when loading from file)
+
     public void SetCurrentCount(int count) => CurrentCount = count;
 }

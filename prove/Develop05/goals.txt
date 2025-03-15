@@ -1,4 +1,4 @@
-0
-SimpleGoal|talk|sacrtament|100|False
-EternalGoal|scripture|scripture|50|False
-ChecklistGoal|temple|go temple|50|False|0
+250
+SimpleGoal|talk|sacrament|100|True
+EternalGoal|study scripture|study|50|False
+ChecklistGoal|temple|attend|50|False|2|5

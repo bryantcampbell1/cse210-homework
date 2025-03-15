@@ -93,9 +93,9 @@ class Program
                     Console.Write("Enter the number of the goal to record the event: ");
                     if (int.TryParse(Console.ReadLine(), out int goalNumber) && goalNumber > 0 && goalNumber <= goalManager.GoalsList.Count)
                     {
-                        // Use GoalsList instead of Goals to access the goal
-                        Goal selectedGoal = goalManager.GoalsList[goalNumber - 1];  // Zero-based index
-                        goalManager.RecordEvent(selectedGoal.Name); // Or use RecordEventByIndex if using index-based method
+                        
+                        Goal selectedGoal = goalManager.GoalsList[goalNumber - 1];  
+                        goalManager.RecordEvent(selectedGoal.Name); 
                     }
                     else
                     {

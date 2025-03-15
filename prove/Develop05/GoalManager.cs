@@ -13,7 +13,6 @@ class GoalManager
         get { return userScore; }
     }
 
-    // Public property to access the Goals list safely
     public List<Goal> GoalsList  
     {
         get { return Goals; }
@@ -63,10 +62,9 @@ class GoalManager
     {
         using (StreamWriter writer = new StreamWriter(filename))
         {
-            writer.WriteLine(userScore); // Save the score
+            writer.WriteLine(userScore); 
             foreach (Goal goal in Goals)
             {
-                // Save each goal's completion status (IsCompleted) and current count for checklist goals
                 if (goal is ChecklistGoal checklistGoal)
                 {
                     writer.WriteLine($"{goal.GetType().Name}|{goal.Name}|{goal.Description}|{goal.BasePoints}|{goal.IsCompleted}|{checklistGoal.GetCurrentCount()}|{checklistGoal.TargetCount}");
@@ -81,59 +79,61 @@ class GoalManager
     }
 
     public void LoadGoals(string filename)
+{
+    if (!File.Exists(filename))
     {
-        if (!File.Exists(filename))
+        Console.WriteLine("File not found.");
+        return;
+    }
+
+    Goals.Clear();
+    string[] lines = File.ReadAllLines(filename);
+
+    userScore = int.Parse(lines[0]); // Load the score
+
+    foreach (string line in lines.Skip(1)) // Skip the first line (score)
+    {
+        string[] parts = line.Split('|');
+
+        if (parts.Length >= 5) // Ensure there's at least the common 5 fields
         {
-            Console.WriteLine("File not found.");
-            return;
-        }
+            string type = parts[0];
+            string name = parts[1];
+            string description = parts[2];
+            int basePoints = int.Parse(parts[3]);
+            bool isCompleted = bool.Parse(parts[4]);
 
-        Goals.Clear();
-        string[] lines = File.ReadAllLines(filename);
-
-        userScore = int.Parse(lines[0]); // Load the score
-
-        foreach (string line in lines.Skip(1)) // Skip the first line (score)
-        {
-            string[] parts = line.Split('|');
-            if (parts.Length >= 5) // Ensure there's at least the common 5 fields
+            Goal goal = type switch
             {
-                string type = parts[0];
-                string name = parts[1];
-                string description = parts[2];
-                int basePoints = int.Parse(parts[3]);
-                bool isCompleted = bool.Parse(parts[4]);
+                "SimpleGoal" => new SimpleGoal(name, description, basePoints),
+                "EternalGoal" => new EternalGoal(name, description, basePoints),
+                "ChecklistGoal" =>
+                    // Ensure there are enough parts for a ChecklistGoal (7 parts)
+                    parts.Length >= 7
+                    ? new ChecklistGoal(name, description, basePoints, 
+                        int.Parse(parts[5]), int.Parse(parts[6]), isCompleted)
+                    : null,
+                _ => null
+            };
 
-                Goal goal = type switch
+            if (goal != null)
+            {
+                // Set the current count for ChecklistGoal when loading from file
+                if (goal is ChecklistGoal checklistGoal)
                 {
-                    "SimpleGoal" => new SimpleGoal(name, description, basePoints),
-                    "EternalGoal" => new EternalGoal(name, description, basePoints),
-                    "ChecklistGoal" => 
-                        // Ensure there are enough parts for a ChecklistGoal (7 parts)
-                        parts.Length >= 7
-                        ? new ChecklistGoal(name, description, basePoints, 
-                            int.Parse(parts[5]), int.Parse(parts[6]), isCompleted)
-                        : null,
-                    _ => null
-                };
-
-                if (goal != null)
-                {
-                    // Set the current count for ChecklistGoal when loading from file
-                    if (goal is ChecklistGoal checklistGoal)
-                    {
-                        checklistGoal.SetCurrentCount(int.Parse(parts[5]));  // Set the current count
-                        checklistGoal.TargetCount = int.Parse(parts[6]);    // Set the target count
-                    }
-                    goal.IsCompleted = isCompleted;
-                    Goals.Add(goal);
+                    checklistGoal.SetCurrentCount(int.Parse(parts[5]));  // Set the current count
+                    checklistGoal.TargetCount = int.Parse(parts[6]);     // Set the target count
                 }
-                else
-                {
-                    Console.WriteLine($"Skipping invalid goal data: {line}");
-                }
+                goal.IsCompleted = isCompleted;
+                Goals.Add(goal);
+            }
+            else
+            {
+                Console.WriteLine($"Skipping invalid goal data: {line}");
             }
         }
-        Console.WriteLine("Goals loaded successfully.");
     }
+    Console.WriteLine("Goals loaded successfully.");
+}
+
 }
