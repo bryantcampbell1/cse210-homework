@@ -1,6 +1,7 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 class GoalManager
 {
@@ -10,6 +11,12 @@ class GoalManager
     public int UserScore
     {
         get { return userScore; }
+    }
+
+    // Public property to access the Goals list safely
+    public List<Goal> GoalsList  
+    {
+        get { return Goals; }
     }
 
     public void AddGoal(Goal goal) => Goals.Add(goal);
@@ -28,6 +35,20 @@ class GoalManager
         Console.WriteLine("Goal not found.");
     }
 
+    public void RecordEventByIndex(int goalIndex)
+    {
+        if (goalIndex >= 0 && goalIndex < Goals.Count)
+        {
+            Goal goal = Goals[goalIndex];
+            userScore += goal.RecordEvent();
+            Console.WriteLine($"Event recorded for goal: {goal.Name}. Total points: {userScore}");
+        }
+        else
+        {
+            Console.WriteLine("Invalid goal index.");
+        }
+    }
+
     public void DisplayGoals()
     {
         Console.WriteLine("The goals are:");
@@ -37,17 +58,23 @@ class GoalManager
             Console.WriteLine($"{index++}. {goal.GetStatus()}");
         }
     }
+
     public void SaveGoals(string filename)
-{
-    try
     {
         using (StreamWriter writer = new StreamWriter(filename))
         {
             writer.WriteLine(userScore); // Save the score
             foreach (Goal goal in Goals)
             {
-                // Save each goal's completion status (IsCompleted)
-                writer.WriteLine($"{goal.GetType().Name}|{goal.Name}|{goal.Description}|{goal.BasePoints}|{goal.IsCompleted}");
+                // Save each goal's completion status (IsCompleted) and current count for checklist goals
+                if (goal is ChecklistGoal checklistGoal)
+                {
+                    writer.WriteLine($"{goal.GetType().Name}|{goal.Name}|{goal.Description}|{goal.BasePoints}|{goal.IsCompleted}|{checklistGoal.GetCurrentCount()}|{checklistGoal.TargetCount}");
+                }
+                else
+                {
+                    writer.WriteLine($"{goal.GetType().Name}|{goal.Name}|{goal.Description}|{goal.BasePoints}|{goal.IsCompleted}");
+                }
             }
         }
         Console.WriteLine($"Goals saved successfully to {filename}");
@@ -66,10 +93,10 @@ class GoalManager
 
         userScore = int.Parse(lines[0]); // Load the score
 
-        foreach (string line in lines.Skip(1))
+        foreach (string line in lines.Skip(1)) // Skip the first line (score)
         {
             string[] parts = line.Split('|');
-            if (parts.Length >= 5)
+            if (parts.Length >= 5) // Ensure there's at least the common 5 fields
             {
                 string type = parts[0];
                 string name = parts[1];
@@ -81,14 +108,29 @@ class GoalManager
                 {
                     "SimpleGoal" => new SimpleGoal(name, description, basePoints),
                     "EternalGoal" => new EternalGoal(name, description, basePoints),
-                    "ChecklistGoal" => new ChecklistGoal(name, description, basePoints, 10, 500),
+                    "ChecklistGoal" => 
+                        // Ensure there are enough parts for a ChecklistGoal (7 parts)
+                        parts.Length >= 7
+                        ? new ChecklistGoal(name, description, basePoints, 
+                            int.Parse(parts[5]), int.Parse(parts[6]), isCompleted)
+                        : null,
                     _ => null
                 };
 
                 if (goal != null)
                 {
+                    // Set the current count for ChecklistGoal when loading from file
+                    if (goal is ChecklistGoal checklistGoal)
+                    {
+                        checklistGoal.SetCurrentCount(int.Parse(parts[5]));  // Set the current count
+                        checklistGoal.TargetCount = int.Parse(parts[6]);    // Set the target count
+                    }
                     goal.IsCompleted = isCompleted;
                     Goals.Add(goal);
+                }
+                else
+                {
+                    Console.WriteLine($"Skipping invalid goal data: {line}");
                 }
             }
         }

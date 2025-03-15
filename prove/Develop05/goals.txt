@@ -1,3 +1,4 @@
 0
-EternalGoal|scripture study|10 minutes|50|False
-ChecklistGoal|attend temple|oerform ordiancnce|50|False
+SimpleGoal|talk|sacrtament|100|False
+EternalGoal|scripture|scripture|50|False
+ChecklistGoal|temple|go temple|50|False|0

@@ -77,19 +77,30 @@ class Program
                     break;
 
                 case "3":
-                     Console.Write("Enter the filename to save goals: ");
+                    Console.Write("Enter the filename to save goals: ");
                     string filename = Console.ReadLine();
                     goalManager.SaveGoals(filename);
                     break;
-                    
+
                 case "4":
-                    goalManager.LoadGoals("goals.txt");
+                    Console.Write("Enter the filename to load goals: ");
+                    string filenameToLoad = Console.ReadLine();
+                    goalManager.LoadGoals(filenameToLoad);
                     break;
 
                 case "5":
-                    Console.Write("Enter goal name to record event: ");
-                    string goalName = Console.ReadLine();
-                    goalManager.RecordEvent(goalName);
+                    goalManager.DisplayGoals();
+                    Console.Write("Enter the number of the goal to record the event: ");
+                    if (int.TryParse(Console.ReadLine(), out int goalNumber) && goalNumber > 0 && goalNumber <= goalManager.GoalsList.Count)
+                    {
+                        // Use GoalsList instead of Goals to access the goal
+                        Goal selectedGoal = goalManager.GoalsList[goalNumber - 1];  // Zero-based index
+                        goalManager.RecordEvent(selectedGoal.Name); // Or use RecordEventByIndex if using index-based method
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid number. Please select a valid goal number.");
+                    }
                     break;
 
                 case "6":
