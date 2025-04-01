@@ -6,7 +6,7 @@ class Program
     {
         while (true)
         {
-            Console.WriteLine("\n==== Task Manager ====");
+            Console.WriteLine("Personal Task Manager");
             Console.WriteLine("1. Select a task to mark as completed");
             Console.WriteLine("2. View current tasks");
             Console.WriteLine("3. Quit");
