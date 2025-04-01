@@ -2,18 +2,17 @@ using System;
 class ChecklistGoal : Goal
 {
     public int TargetCount;
-    public int CurrentCount; // Track the number of times the goal has been completed
+    public int CurrentCount; 
     private int BonusPoints;
 
     public ChecklistGoal(string name, string description, int basePoints, int targetCount, int bonusPoints)
         : base(name, description, basePoints)
     {
         TargetCount = targetCount;
-        CurrentCount = 0; // Initialize count to 0
+        CurrentCount = 0; 
         BonusPoints = bonusPoints;
     }
 
-    // Load constructor (to load from file)
     public ChecklistGoal(string name, string description, int basePoints, int targetCount, int bonusPoints, int currentCount, bool isCompleted)
         : base(name, description, basePoints)
     {
