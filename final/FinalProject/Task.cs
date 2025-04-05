@@ -1,6 +1,6 @@
 using System;
 
-abstract class Task
+public class Task
 {
     public string Title { get; }
     public string Description { get; }
