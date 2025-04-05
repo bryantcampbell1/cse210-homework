@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-class Program
+class Program 
 {
     static TaskManager taskManager = new TaskManager();
 
@@ -38,8 +38,7 @@ class Program
             }
         }
     }
-
-    static void AddNewTask()
+static void AddNewTask()
     {
         Console.Write("Enter task title: ");
         string title = Console.ReadLine();
@@ -53,7 +52,8 @@ class Program
         Task newTask = new Task(title, description, dueDate, priority);
         taskManager.AddTask(newTask);
         Console.WriteLine("Task added successfully.\n");
-    }
+}
+
 
     static void MarkTaskAsCompleted()
     {

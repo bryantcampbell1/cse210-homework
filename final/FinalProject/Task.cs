@@ -8,7 +8,7 @@ public class Task
     public string Priority { get; }
     public bool IsCompleted { get; private set; }
 
-    protected Task(string title, string description, DateTime dueDate, string priority)
+    public Task(string title, string description, DateTime dueDate, string priority)
     {
         Title = title;
         Description = description;
