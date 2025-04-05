@@ -1,9 +1,17 @@
 using System;
 
-class ErrandTask : Task
+public class ErrandTask : Task
 {
-    static void Main(string[] args)
+    public TimeSpan EstimatedTime { get; set; }
+
+    public ErrandTask(string title, string description, DateTime dueDate, string priority, TimeSpan estimatedTime)
+        : base(title, description, dueDate, priority)
     {
-        Console.WriteLine("Hello World!");
+        EstimatedTime = estimatedTime;
+    }
+
+    public void SetEstimatedTime(TimeSpan estimatedTime)
+    {
+        EstimatedTime = estimatedTime;
     }
 }

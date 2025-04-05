@@ -16,4 +16,9 @@ abstract class Task
         Priority = priority;
         IsCompleted = false;
     }
+
+    public void MarkAsCompleted()
+    {
+        IsCompleted = true;
+    }
 }

@@ -1,9 +1,19 @@
 using System;
 
-class WorkTask : Task
+public class WorkTask : Task
 {
-    static void Main(string[] args)
+    public string AssignedTo { get; set; }
+    public string ProjectName { get; set; }
+
+    public WorkTask(string title, string description, DateTime dueDate, string priority, string assignedTo, string projectName)
+        : base(title, description, dueDate, priority)
     {
-        Console.WriteLine("Hello World!");
+        AssignedTo = assignedTo;
+        ProjectName = projectName;
+    }
+
+    public void AssignTo(string person)
+    {
+        AssignedTo = person;
     }
 }
