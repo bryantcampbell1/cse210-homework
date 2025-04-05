@@ -1,6 +1,6 @@
 using System;
 
-public class ErrandTask : Task
+public class ErrandTask : ToDoTask
 {
     public TimeSpan EstimatedTime { get; set; }
 

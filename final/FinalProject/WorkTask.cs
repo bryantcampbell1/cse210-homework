@@ -1,6 +1,6 @@
 using System;
 
-public class WorkTask : Task
+public class WorkTask : ToDoTask
 {
     public string AssignedTo { get; set; }
     public string ProjectName { get; set; }

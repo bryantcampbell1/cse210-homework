@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 public class TaskHistory
 {
-    private List<Task> taskHistory = new List<Task>();
+    private List<ToDoTask> taskHistory = new List<ToDoTask>();
 
-    public void ArchiveCompletedTasks(List<Task> tasks)
+    public void ArchiveCompletedTasks(List<ToDoTask> tasks)
     {
         foreach (var task in tasks)
         {
@@ -16,7 +16,7 @@ public class TaskHistory
         }
     }
 
-    public List<Task> RetrieveTaskHistory()
+    public List<ToDoTask> RetrieveTaskHistory()
     {
         return taskHistory;
     }

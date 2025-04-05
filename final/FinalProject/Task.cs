@@ -1,6 +1,6 @@
 using System;
 
-public class Task
+public class ToDoTask
 {
     public string Title { get; }
     public string Description { get; }
@@ -8,7 +8,7 @@ public class Task
     public string Priority { get; }
     public bool IsCompleted { get; private set; }
 
-    public Task(string title, string description, DateTime dueDate, string priority)
+    public ToDoTask(string title, string description, DateTime dueDate, string priority)
     {
         Title = title;
         Description = description;

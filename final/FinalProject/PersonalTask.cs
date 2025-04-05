@@ -1,6 +1,6 @@
 using System;
 
-public class PersonalTask : Task
+public class PersonalTask : ToDoTask
 {
     public string Location { get; set; }
     public bool IsRecurring { get; set; }
