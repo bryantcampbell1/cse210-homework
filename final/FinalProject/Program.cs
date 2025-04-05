@@ -39,21 +39,47 @@ class Program
         }
     }
 
-    static void AddNewTask()
+static void AddNewTask()
+{
+    Console.Write("Enter task title: ");
+    string title = Console.ReadLine();
+    Console.Write("Enter task description: ");
+    string description = Console.ReadLine();
+    Console.Write("Enter task due date (mm-dd): ");
+    DateTime dueDate = DateTime.Parse(Console.ReadLine());
+    Console.Write("Enter task priority (L, M, H): ");
+    string priority = Console.ReadLine();
+
+    Console.WriteLine("Select task type:");
+    Console.WriteLine("1. Personal Task");
+    Console.WriteLine("2. Work Task");
+    Console.WriteLine("3. Errand Task");
+    Console.Write("Enter your choice: ");
+    string taskTypeChoice = Console.ReadLine();
+
+    string taskType;
+    switch (taskTypeChoice)
     {
-        Console.Write("Enter task title: ");
-        string title = Console.ReadLine();
-        Console.Write("Enter task description: ");
-        string description = Console.ReadLine();
-        Console.Write("Enter task due date (yyyy-mm-dd): ");
-        DateTime dueDate = DateTime.Parse(Console.ReadLine());
-        Console.Write("Enter task priority: ");
-        string priority = Console.ReadLine();
-        
-        ToDoTask newTask = new ToDoTask(title, description, dueDate, priority);
-        taskManager.AddTask(newTask);
-        Console.WriteLine("Task added successfully.\n");
+        case "1":
+            taskType = "Personal Task";
+            break;
+        case "2":
+            taskType = "Work Task";
+            break;
+        case "3":
+            taskType = "Errand Task";
+            break;
+        default:
+            Console.WriteLine("Invalid choice. Defaulting to Personal Task.");
+            taskType = "Personal Task";
+            break;
     }
+
+    ToDoTask newTask = new ToDoTask(title, description, dueDate, priority, taskType);
+    taskManager.AddTask(newTask);
+    Console.WriteLine("Task added successfully.\n");
+}
+
     
     static void MarkTaskAsCompleted()
     {

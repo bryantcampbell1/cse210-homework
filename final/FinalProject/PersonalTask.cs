@@ -5,12 +5,13 @@ public class PersonalTask : ToDoTask
     public string Location { get; set; }
     public bool IsRecurring { get; set; }
 
-    public PersonalTask(string title, string description, DateTime dueDate, string priority, string location, bool isRecurring)
-        : base(title, description, dueDate, priority)
+    public PersonalTask(string title, string description, DateTime dueDate, string priority, string taskType, string location, bool isRecurring)
+        : base(title, description, dueDate, priority, taskType)
     {
         Location = location;
         IsRecurring = isRecurring;
     }
+
 
     public void SetRecurring(bool isRecurring)
     {
